@@ -1,18 +1,18 @@
 package com.thumb.palco.model;
 
-public class PostConcertoArtistTimePlaceRequestBody {
+public class PatchCityRequestBody {
 
     public String artist;
     public String time;
-    public String place;
+    public String city;
 
-    public PostConcertoArtistTimePlaceRequestBody() {
+    public PatchCityRequestBody() {
     }
 
-    public PostConcertoArtistTimePlaceRequestBody(String artist, String time, String place) {
+    public PatchCityRequestBody(String artist, String time, String city) {
         this.artist = artist;
         this.time = time;
-        this.place = place;
+        this.city = city;
     }
 
     public String getArtist() {
@@ -31,11 +31,11 @@ public class PostConcertoArtistTimePlaceRequestBody {
         this.time = time;
     }
 
-    public String getPlace() {
-        return place;
+    public String getCity() {
+        return city;
     }
 
-    public void setPlace(String place) {
-        this.place = place;
+    public void setCity(String city) {
+        this.city = city;
     }
 }

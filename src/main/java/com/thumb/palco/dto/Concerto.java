@@ -1,4 +1,4 @@
-package com.thumb.palco.model;
+package com.thumb.palco.dto;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

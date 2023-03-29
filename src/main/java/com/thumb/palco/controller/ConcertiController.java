@@ -1,13 +1,15 @@
 package com.thumb.palco.controller;
 
+import com.thumb.palco.dto.Concerto;
 import com.thumb.palco.model.*;
-import com.thumb.palco.repository.ConcertiRepository;
+import com.thumb.palco.service.ConcertoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -15,55 +17,65 @@ import java.util.List;
 public class ConcertiController {
 
     @Autowired
-    ConcertiRepository concertiRepository;
+    ConcertoService concertoService;
 
-    @GetMapping(value = "/getconcerti",  produces = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(method = RequestMethod.GET, value = "/getconcerti",  produces = {MediaType.APPLICATION_JSON_VALUE})
     public List<Concerto> getConcerti() {
-        return concertiRepository.findAll();
+        return concertoService.findAll();
     }
 
-    @PostMapping(value = "/getconcertiforartist", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public List<Concerto> postConcertiArtist(@RequestBody Artist artist) {
-        return concertiRepository.findByArtist(artist.artist);
+    @RequestMapping(method = RequestMethod.GET, value = "/getartists", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public List<String> getArtists() {
+        return concertoService.findArtists();
     }
 
-    @PostMapping(value = "/getconcertiforcity", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public List<Concerto> postConcertiCity(@RequestBody City city) {
-        return concertiRepository.findByCity(city.city);
+    @RequestMapping(method = RequestMethod.GET, value = "/getcities", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public List<String> getCities() {
+        return concertoService.findCities();
     }
 
-    @PostMapping(value = "/getconcertifortime", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public List<Concerto> postConcertiTime(@RequestBody Time time) {
-        return concertiRepository.findByTime(time.time);
+    @RequestMapping(method = RequestMethod.GET, value = "/getconcertiartist/{artist}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public List<Concerto> postConcertiArtist(@PathVariable String artist) {
+        return concertoService.findByArtist(artist);
     }
 
-    @PostMapping(value = "/getconcertiforartistandcity", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public List<Concerto> postConcertoArtistCity(@RequestBody PostConcertoArtistCityRequestBody requestBody) {
-        return concertiRepository.findByArtistCity(requestBody.artist, requestBody.city);
+    @RequestMapping(method = RequestMethod.GET, value = "/getconcerticity/{city}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public List<Concerto> postConcertiCity(@PathVariable String city) {
+        return concertoService.findByCity(city);
     }
 
-    @PostMapping(value = "/getconcertiforartistandtime", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public List<Concerto> postConcertoArtistTime(@RequestBody PostConcertoArtistTimeRequestBody requestBody) {
-        return concertiRepository.findByArtistTime(requestBody.artist, requestBody.time);
+    @RequestMapping(method = RequestMethod.GET, value = "/getconcertitime/{time}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public List<Concerto> postConcertiTime(@PathVariable String time) {
+        return concertoService.findByTime(time);
     }
 
-    @PostMapping(value = "/insertconcerto", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Integer insertElement(@RequestBody PostConcertoInsertRequestBody requestBody) {
-        return concertiRepository.putConcert(requestBody.artist, requestBody.place, requestBody.city, requestBody.time);
+    @RequestMapping(method = RequestMethod.GET, value = "/getconcertiartistcity/{artist}/{city}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public List<Concerto> postConcertoArtistCity(@PathVariable String artist,@PathVariable String city) {
+        return concertoService.findByArtistCity(artist, city);
     }
 
-    @PostMapping(value = "/deleteconcerto", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Integer deleteElement(@RequestBody PostConcertoArtistTimeRequestBody requestBody) {
-        return concertiRepository.deleteConcert(requestBody.artist, requestBody.time);
+    @RequestMapping(method = RequestMethod.GET, value = "/getconcertitimeartist/{time}/{artist}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public List<Concerto> postConcertoArtistTime(@PathVariable String time,@PathVariable String artist) {
+        return concertoService.findByArtistTime(time, artist);
     }
 
-    @PostMapping(value = "/updateconcertoplace", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Integer updateConcertPlace(@RequestBody PostConcertoArtistTimePlaceRequestBody requestBody) {
-        return concertiRepository.updateConcertPlace(requestBody.place, requestBody.artist, requestBody.time);
+    @RequestMapping(method = RequestMethod.PUT, value = "/insertconcerto", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public Integer insertElement(@RequestBody PutConcertoRequestBody requestBody) {
+        return concertoService.putConcert(requestBody.artist, requestBody.place, requestBody.city, requestBody.time);
     }
 
-    @PostMapping(value = "/updateconcertocity", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Integer updateConcertCity(@RequestBody PostConcertoArtistTimeCityRequestBody requestBody) {
-        return concertiRepository.updateConcertCity(requestBody.city, requestBody.artist, requestBody.time);
+    @RequestMapping(method = RequestMethod.DELETE, value = "/deleteconcerto/{artist}/{time}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public Integer deleteElement(@PathVariable String artist, @PathVariable String time) {
+        return concertoService.deleteConcert(artist, time);
+    }
+
+    @RequestMapping(method = RequestMethod.PATCH, value = "/updateconcertoplace", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public Integer updateConcertPlace(@RequestBody PatchPlaceRequestBody requestBody) {
+        return concertoService.updateConcertPlace(requestBody.place, requestBody.artist, requestBody.time);
+    }
+
+    @RequestMapping(method = RequestMethod.PATCH, value = "/updateconcertocity", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public Integer updateConcertCity(@RequestBody PatchCityRequestBody requestBody) {
+        return concertoService.updateConcertCity(requestBody.city, requestBody.artist, requestBody.time);
     }
 }

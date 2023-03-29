@@ -16,4 +16,4 @@ spring.datasource.password=password
 | artist | varchar(50) | NO   | PRI | NULL    |                |
 | place  | varchar(60) | NO   |     | NULL    |                |
 | city   | varchar(50) | NO   |     | NULL    |                |
-| time   | varchar(10) | NO   | PRI | NULL    |                |
+| time   | datetime    | NO   | PRI | NULL    |                |

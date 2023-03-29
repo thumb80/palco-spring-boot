@@ -1,7 +1,6 @@
 package com.thumb.palco.repository;
 
-import com.thumb.palco.model.Concerto;
-import com.thumb.palco.model.PostConcertoInsertRequestBody;
+import com.thumb.palco.dto.Concerto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -31,7 +30,13 @@ public interface ConcertiRepository extends JpaRepository<Concerto, Integer> {
     List<Concerto> findByArtistCity(@Param("artist") String artist, @Param("city") String city);
 
     @Query(value = "SELECT * FROM concerti where artist = :artist and time = :time", nativeQuery = true)
-    List<Concerto> findByArtistTime(@Param("artist") String artist, @Param("time") String time);
+    List<Concerto> findByArtistTime(@Param("time") String time, @Param("artist") String artist);
+
+    @Query(value = "SELECT DISTINCT artist FROM concerti", nativeQuery = true)
+    List<String> findArtists();
+
+    @Query(value = "SELECT DISTINCT city FROM concerti", nativeQuery = true)
+    List<String> findCities();
 
     // CREATE
     @Modifying

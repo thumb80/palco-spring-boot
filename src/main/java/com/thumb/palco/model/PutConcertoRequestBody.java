@@ -1,16 +1,16 @@
 package com.thumb.palco.model;
 
-public class PostConcertoInsertRequestBody {
+public class PutConcertoRequestBody {
 
     public String artist;
     public String place;
     public String city;
     public String time;
 
-    public PostConcertoInsertRequestBody() {
+    public PutConcertoRequestBody() {
     }
 
-    public PostConcertoInsertRequestBody(String artist, String place, String city, String time) {
+    public PutConcertoRequestBody(String artist, String place, String city, String time) {
         this.artist = artist;
         this.place = place;
         this.city = city;
