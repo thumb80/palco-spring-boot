@@ -1,10 +1,14 @@
 package com.thumb.palco.service;
 
-import com.thumb.palco.dto.Concerto;
+import com.thumb.palco.dto.DateCitySearchDTO;
+import com.thumb.palco.model.Concerto;
+import com.thumb.palco.dto.DateSearchDTO;
 import com.thumb.palco.repository.ConcertiRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -43,6 +47,19 @@ public class ConcertoService {
 
     public List<Concerto> findByArtistTime(String time, String artist) {
         return concertiRepository.findByArtistTime(time, artist);
+    }
+
+    public List<Concerto> findByMonth(DateSearchDTO dateSearchDTO) {
+        LocalDateTime mintime = LocalDateTime.of(dateSearchDTO.getStartDate(), LocalTime.of(0,0,0));
+        LocalDateTime maxtime = LocalDateTime.of(dateSearchDTO.getEndDate(), LocalTime.of(0,0,0));
+        return concertiRepository.findConcertoByMonth(mintime, maxtime);
+    }
+
+    public List<Concerto> findByMonthCity(DateCitySearchDTO dateCitySearchDTO) {
+        LocalDateTime mintime = LocalDateTime.of(dateCitySearchDTO.getStartDate(), LocalTime.of(0,0,0));
+        LocalDateTime maxtime = LocalDateTime.of(dateCitySearchDTO.getEndDate(), LocalTime.of(0,0,0));
+        String city = dateCitySearchDTO.getCity();
+        return concertiRepository.findConcertoByMonthCity(mintime, maxtime, city);
     }
 
     public Integer putConcert(String artist, String place, String city, String time) {

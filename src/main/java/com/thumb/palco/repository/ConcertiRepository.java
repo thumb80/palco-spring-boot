@@ -1,6 +1,6 @@
 package com.thumb.palco.repository;
 
-import com.thumb.palco.dto.Concerto;
+import com.thumb.palco.model.Concerto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -37,6 +38,13 @@ public interface ConcertiRepository extends JpaRepository<Concerto, Integer> {
 
     @Query(value = "SELECT DISTINCT city FROM concerti", nativeQuery = true)
     List<String> findCities();
+
+    @Query(value = "SELECT * FROM concerti where time >= :mintime and time <= :maxtime", nativeQuery = true)
+    List<Concerto> findConcertoByMonth(@Param("mintime") LocalDateTime mintime, @Param("maxtime") LocalDateTime maxtime);
+
+
+    @Query(value = "SELECT * FROM concerti where time >= :mintime and time <= :maxtime and city = :city", nativeQuery = true)
+    List<Concerto> findConcertoByMonthCity(@Param("mintime") LocalDateTime mintime, @Param("maxtime") LocalDateTime maxtime, @Param("city") String city);
 
     // CREATE
     @Modifying

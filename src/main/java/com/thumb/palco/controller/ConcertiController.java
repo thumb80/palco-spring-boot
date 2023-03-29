@@ -1,7 +1,7 @@
 package com.thumb.palco.controller;
 
-import com.thumb.palco.dto.Concerto;
-import com.thumb.palco.model.*;
+import com.thumb.palco.dto.*;
+import com.thumb.palco.model.Concerto;
 import com.thumb.palco.service.ConcertoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -59,8 +59,20 @@ public class ConcertiController {
         return concertoService.findByArtistTime(time, artist);
     }
 
+    @RequestMapping(method = RequestMethod.POST, value = "/getconcertimese", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public List<Concerto> findConcertoByMonth(@RequestBody DateSearchDTO dateSearchDTO) {
+        return concertoService.findByMonth(dateSearchDTO);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/getconcertimesecity")
+    public List<Concerto> findConcertoByMonthCity(@RequestBody DateCitySearchDTO dateCitySearchDTO) {
+        return concertoService.findByMonthCity(dateCitySearchDTO);
+    }
+
+
+
     @RequestMapping(method = RequestMethod.PUT, value = "/insertconcerto", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Integer insertElement(@RequestBody PutConcertoRequestBody requestBody) {
+    public Integer insertElement(@RequestBody PutConcertoDTO requestBody) {
         return concertoService.putConcert(requestBody.artist, requestBody.place, requestBody.city, requestBody.time);
     }
 
@@ -70,12 +82,12 @@ public class ConcertiController {
     }
 
     @RequestMapping(method = RequestMethod.PATCH, value = "/updateconcertoplace", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Integer updateConcertPlace(@RequestBody PatchPlaceRequestBody requestBody) {
+    public Integer updateConcertPlace(@RequestBody PatchPlaceDTO requestBody) {
         return concertoService.updateConcertPlace(requestBody.place, requestBody.artist, requestBody.time);
     }
 
     @RequestMapping(method = RequestMethod.PATCH, value = "/updateconcertocity", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Integer updateConcertCity(@RequestBody PatchCityRequestBody requestBody) {
+    public Integer updateConcertCity(@RequestBody PatchCityDTO requestBody) {
         return concertoService.updateConcertCity(requestBody.city, requestBody.artist, requestBody.time);
     }
 }
