@@ -81,12 +81,16 @@ public interface ConcertiRepository extends JpaRepository<Concerto, Integer> {
 
     @Query(value = "SELECT id FROM concerti WHERE artist = :artist and place = :place and city = :city and time = :time", nativeQuery = true)
     Integer findId(@Param("artist") String artist, @Param("place") String place, @Param("city") String city, @Param("time") String time);
+
     @Query(value = "SELECT id FROM concerti WHERE place = :place and city = :city and time = :time", nativeQuery = true)
     Integer findIdArtist(@Param("place") String place, @Param("city") String city, @Param("time") String time);
+
     @Query(value = "SELECT id FROM concerti WHERE artist = :artist and city = :city and time = :time", nativeQuery = true)
     Integer findIdPlace(@Param("artist") String artist, @Param("city") String city, @Param("time") String time);
+
     @Query(value = "SELECT id FROM concerti WHERE artist = :artist and place = :place and time = :time", nativeQuery = true)
     Integer findIdCity(@Param("artist") String artist, @Param("place") String place, @Param("time") String time);
+    
     @Query(value = "SELECT id FROM concerti WHERE artist = :artist and place = :place and city = :city", nativeQuery = true)
     Integer findIdTime(@Param("artist") String artist, @Param("place") String place, @Param("city") String city);
 }
