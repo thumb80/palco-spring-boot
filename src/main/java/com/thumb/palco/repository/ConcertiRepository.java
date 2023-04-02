@@ -40,32 +40,53 @@ public interface ConcertiRepository extends JpaRepository<Concerto, Integer> {
     List<String> findCities();
 
     @Query(value = "SELECT * FROM concerti where time >= :mintime and time <= :maxtime", nativeQuery = true)
-    List<Concerto> findConcertoByMonth(@Param("mintime") LocalDateTime mintime, @Param("maxtime") LocalDateTime maxtime);
+    List<Concerto> findElementByMonth(@Param("mintime") LocalDateTime mintime, @Param("maxtime") LocalDateTime maxtime);
 
 
     @Query(value = "SELECT * FROM concerti where time >= :mintime and time <= :maxtime and city = :city", nativeQuery = true)
-    List<Concerto> findConcertoByMonthCity(@Param("mintime") LocalDateTime mintime, @Param("maxtime") LocalDateTime maxtime, @Param("city") String city);
+    List<Concerto> findElementByMonthCity(@Param("mintime") LocalDateTime mintime, @Param("maxtime") LocalDateTime maxtime, @Param("city") String city);
 
     // CREATE
     @Modifying
     @Query(value = "INSERT INTO concerti (id, artist, place, city, time) VALUES (null, :artist, :place,  :city,  :time)", nativeQuery = true)
     @Transactional
-    Integer putConcert(@Param("artist") String artist, @Param("place") String place,@Param("city") String city, @Param("time") String time);
+    Integer createElement(@Param("artist") String artist, @Param("place") String place, @Param("city") String city, @Param("time") String time);
 
     // DELETE
     @Modifying
-    @Query(value = "DELETE FROM concerti where artist = :artist and time = :time", nativeQuery = true)
+    @Query(value = "DELETE FROM concerti where id = :id", nativeQuery = true)
     @Transactional
-    Integer deleteConcert(@Param("artist") String artist, @Param("time") String time);
+    Integer deleteElement(@Param("id") Integer id);
 
     //UPDATE
     @Modifying
-    @Query(value = "UPDATE concerti SET place = :place where artist = :artist and time = :time", nativeQuery = true)
+    @Query(value = "UPDATE concerti SET artist = :artist where id = :id", nativeQuery = true)
     @Transactional
-    Integer updateConcertPlace(@Param("place") String place, @Param("artist") String artist, @Param("time") String time);
+    Integer updateElementArtist(@Param("id") Integer id, @Param("artist") String artist);
+    @Modifying
+    @Query(value = "UPDATE concerti SET place = :place where id = :id", nativeQuery = true)
+    @Transactional
+    Integer updateElementPlace(@Param("id") Integer id, @Param("place") String place);
+    @Modifying
+    @Query(value = "UPDATE concerti SET city = :city where id = :id", nativeQuery = true)
+    @Transactional
+    Integer updateElementCity(@Param("id") Integer id, @Param("city") String city);
 
     @Modifying
-    @Query(value = "UPDATE concerti SET city = :city where artist = :artist and time = :time", nativeQuery = true)
+    @Query(value = "UPDATE concerti SET time = :time where id = :id", nativeQuery = true)
     @Transactional
-    Integer updateConcertCity(@Param("city") String city, @Param("artist") String artist, @Param("time") String time);
+    Integer updateElementTime(@Param("id") Integer id, @Param("time") String time);
+    @Query(value = "SELECT * FROM concerti WHERE id = :id ORDER BY artist DESC LIMIT 1", nativeQuery = true)
+    Concerto findElement(@Param("id") Integer id);
+
+    @Query(value = "SELECT id FROM concerti WHERE artist = :artist and place = :place and city = :city and time = :time", nativeQuery = true)
+    Integer findId(@Param("artist") String artist, @Param("place") String place, @Param("city") String city, @Param("time") String time);
+    @Query(value = "SELECT id FROM concerti WHERE place = :place and city = :city and time = :time", nativeQuery = true)
+    Integer findIdArtist(@Param("place") String place, @Param("city") String city, @Param("time") String time);
+    @Query(value = "SELECT id FROM concerti WHERE artist = :artist and city = :city and time = :time", nativeQuery = true)
+    Integer findIdPlace(@Param("artist") String artist, @Param("city") String city, @Param("time") String time);
+    @Query(value = "SELECT id FROM concerti WHERE artist = :artist and place = :place and time = :time", nativeQuery = true)
+    Integer findIdCity(@Param("artist") String artist, @Param("place") String place, @Param("time") String time);
+    @Query(value = "SELECT id FROM concerti WHERE artist = :artist and place = :place and city = :city", nativeQuery = true)
+    Integer findIdTime(@Param("artist") String artist, @Param("place") String place, @Param("city") String city);
 }

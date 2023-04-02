@@ -3,9 +3,10 @@ package com.thumb.palco.dto;
 import lombok.Data;
 
 @Data
-public class PatchCityDTO {
+public class ConcertoDTO {
 
     public String artist;
-    public String time;
+    public String place;
     public String city;
+    public String time;
 }

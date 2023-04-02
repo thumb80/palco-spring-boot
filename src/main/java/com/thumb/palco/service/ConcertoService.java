@@ -6,7 +6,6 @@ import com.thumb.palco.dto.DateSearchDTO;
 import com.thumb.palco.repository.ConcertiRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
@@ -52,30 +51,48 @@ public class ConcertoService {
     public List<Concerto> findByMonth(DateSearchDTO dateSearchDTO) {
         LocalDateTime mintime = LocalDateTime.of(dateSearchDTO.getStartDate(), LocalTime.of(0,0,0));
         LocalDateTime maxtime = LocalDateTime.of(dateSearchDTO.getEndDate(), LocalTime.of(0,0,0));
-        return concertiRepository.findConcertoByMonth(mintime, maxtime);
+        return concertiRepository.findElementByMonth(mintime, maxtime);
     }
 
     public List<Concerto> findByMonthCity(DateCitySearchDTO dateCitySearchDTO) {
         LocalDateTime mintime = LocalDateTime.of(dateCitySearchDTO.getStartDate(), LocalTime.of(0,0,0));
         LocalDateTime maxtime = LocalDateTime.of(dateCitySearchDTO.getEndDate(), LocalTime.of(0,0,0));
         String city = dateCitySearchDTO.getCity();
-        return concertiRepository.findConcertoByMonthCity(mintime, maxtime, city);
+        return concertiRepository.findElementByMonthCity(mintime, maxtime, city);
     }
 
     public Integer putConcert(String artist, String place, String city, String time) {
-        return concertiRepository.putConcert(artist, place, city, time);
+        Integer id = concertiRepository.findId(artist, place, city, time);
+        Concerto concerto = concertiRepository.findElement(id);
+        if (concerto != null)
+            return -1;
+        else
+            return concertiRepository.createElement(artist, place, city, time);
     }
 
-    public Integer deleteConcert(String artist, String time) {
-        return concertiRepository.deleteConcert(artist, time);
+    public Integer deleteElement(String artist, String place, String city, String time) {
+        Integer id = concertiRepository.findId(artist, place, city, time);
+        return concertiRepository.deleteElement(id);
     }
 
-    public Integer updateConcertPlace(String place, String artist, String time) {
-        return concertiRepository.updateConcertPlace(place, artist, time);
+
+    public Integer updateElementArtist(String artist, String place, String city, String time) {
+        Integer id = concertiRepository.findIdArtist(place, city, time);
+        return concertiRepository.updateElementArtist(id, artist);
     }
 
-    public Integer updateConcertCity(String city, String artist, String time) {
-        return concertiRepository.updateConcertCity(city, artist, time);
+    public Integer updateElementPlace(String artist, String place, String city, String time) {
+        Integer id = concertiRepository.findIdPlace(artist, city, time);
+        return concertiRepository.updateElementPlace(id, place);
     }
 
+    public Integer updateElementCity(String artist, String place, String city, String time) {
+        Integer id = concertiRepository.findIdCity(artist, place, time);
+        return concertiRepository.updateElementCity(id, city);
+    }
+
+    public Integer updateElementTime(String artist, String place, String city, String time) {
+        Integer id = concertiRepository.findIdTime(artist, place, city);
+        return concertiRepository.updateElementTime(id, time);
+    }
 }
