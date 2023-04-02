@@ -10,10 +10,10 @@ spring.datasource.password=password
 ```
 ## Database MySQL Schema :
 
-| Field  | Type        | Null | Key | Default | Extra          |
-|--------|-------------|------|-----|---------|----------------|
-| id     | mediumint   | NO   | PRI | NULL    | auto_increment |
-| artist | varchar(50) | NO   |     | NULL    |                |
-| place  | varchar(60) | NO   |     | NULL    |                |
-| city   | varchar(50) | NO   |     | NULL    |                |
-| time   | datetime    | NO   |     | NULL    |                |
+| Field  | Type        | Null | Key |   Extra        |
+|--------|-------------|------|-----|----------------|
+| id     | mediumint   | NO   | PRI | auto_increment |
+| artist | varchar(50) | NO   |     |                |
+| place  | varchar(60) | NO   |     |                |
+| city   | varchar(50) | NO   |     |                |
+| time   | datetime    | NO   |     |                |
