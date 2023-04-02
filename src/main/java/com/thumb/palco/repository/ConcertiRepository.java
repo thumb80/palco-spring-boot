@@ -78,7 +78,7 @@ public interface ConcertiRepository extends JpaRepository<Concerto, Integer> {
     @Query(value = "UPDATE concerti SET time = :time where id = :id", nativeQuery = true)
     @Transactional
     Integer updateElementTime(@Param("id") Integer id, @Param("time") String time);
-    
+
     @Query(value = "SELECT * FROM concerti WHERE id = :id ORDER BY artist DESC LIMIT 1", nativeQuery = true)
     Concerto findElement(@Param("id") Integer id);
 
