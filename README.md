@@ -13,7 +13,7 @@ spring.datasource.password=password
 | Field  | Type        | Null | Key | Default | Extra          |
 |--------|-------------|------|-----|---------|----------------|
 | id     | mediumint   | NO   | PRI | NULL    | auto_increment |
-| artist | varchar(50) | NO   | PRI | NULL    |                |
+| artist | varchar(50) | NO   |     | NULL    |                |
 | place  | varchar(60) | NO   |     | NULL    |                |
 | city   | varchar(50) | NO   |     | NULL    |                |
-| time   | datetime    | NO   | PRI | NULL    |                |
+| time   | datetime    | NO   |     | NULL    |                |
