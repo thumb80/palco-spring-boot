@@ -63,10 +63,12 @@ public interface ConcertiRepository extends JpaRepository<Concerto, Integer> {
     @Query(value = "UPDATE concerti SET artist = :artist where id = :id", nativeQuery = true)
     @Transactional
     Integer updateElementArtist(@Param("id") Integer id, @Param("artist") String artist);
+
     @Modifying
     @Query(value = "UPDATE concerti SET place = :place where id = :id", nativeQuery = true)
     @Transactional
     Integer updateElementPlace(@Param("id") Integer id, @Param("place") String place);
+
     @Modifying
     @Query(value = "UPDATE concerti SET city = :city where id = :id", nativeQuery = true)
     @Transactional
@@ -76,6 +78,7 @@ public interface ConcertiRepository extends JpaRepository<Concerto, Integer> {
     @Query(value = "UPDATE concerti SET time = :time where id = :id", nativeQuery = true)
     @Transactional
     Integer updateElementTime(@Param("id") Integer id, @Param("time") String time);
+    
     @Query(value = "SELECT * FROM concerti WHERE id = :id ORDER BY artist DESC LIMIT 1", nativeQuery = true)
     Concerto findElement(@Param("id") Integer id);
 
@@ -90,7 +93,7 @@ public interface ConcertiRepository extends JpaRepository<Concerto, Integer> {
 
     @Query(value = "SELECT id FROM concerti WHERE artist = :artist and place = :place and time = :time", nativeQuery = true)
     Integer findIdCity(@Param("artist") String artist, @Param("place") String place, @Param("time") String time);
-    
+
     @Query(value = "SELECT id FROM concerti WHERE artist = :artist and place = :place and city = :city", nativeQuery = true)
     Integer findIdTime(@Param("artist") String artist, @Param("place") String place, @Param("city") String city);
 }
