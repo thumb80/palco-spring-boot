@@ -5,11 +5,7 @@ import com.thumb.palco.model.Concerto;
 import com.thumb.palco.service.ConcertoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -45,6 +41,7 @@ public class ConcertiController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/getconcertitime/{time}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @CrossOrigin(origins = "https://palco.mywire.org")
     public List<Concerto> getConcertiTime(@PathVariable String time) {
         return concertoService.findByTime(time);
     }
