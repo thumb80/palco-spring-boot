@@ -15,27 +15,27 @@ public class ConcertiController {
     @Autowired
     ConcertoService concertoService;
 
-    @RequestMapping(method = RequestMethod.GET, value = "/getconcerti",  produces = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(method = RequestMethod.GET, value = "/events",  produces = {MediaType.APPLICATION_JSON_VALUE})
     public List<Concerto> getConcerti() {
         return concertoService.findAll();
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/getartists", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(method = RequestMethod.GET, value = "/artists", produces = {MediaType.APPLICATION_JSON_VALUE})
     public List<String> getArtists() {
         return concertoService.findArtists();
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/getcities", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(method = RequestMethod.GET, value = "/cities", produces = {MediaType.APPLICATION_JSON_VALUE})
     public List<String> getCities() {
         return concertoService.findCities();
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/getconcertiartist/{artist}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(method = RequestMethod.GET, value = "/artist/{artist}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public List<Concerto> getConcertiArtist(@PathVariable String artist) {
         return concertoService.findByArtist(artist);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/getconcerticity/{city}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(method = RequestMethod.GET, value = "/city/{city}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public List<Concerto> getConcertiCity(@PathVariable String city) {
         return concertoService.findByCity(city);
     }
