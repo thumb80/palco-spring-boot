@@ -61,37 +61,37 @@ public class ConcertiController {
         return concertoService.findByMonth(dateSearchDTO);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/getconcertimesecity")
+    @RequestMapping(method = RequestMethod.POST, value = "/getconcertimesecity", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
     public List<Concerto> getConcertiByMonthCity(@RequestBody DateCitySearchDTO dateCitySearchDTO) {
         return concertoService.findByMonthCity(dateCitySearchDTO);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/insertitem", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(method = RequestMethod.POST, value = "/insertitem", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
     public Integer insertElement(@RequestBody ConcertoDTO requestBody) {
         return concertoService.putConcert(requestBody.artist, requestBody.place, requestBody.city, requestBody.time);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/deleteitem", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(method = RequestMethod.DELETE, value = "/deleteitem", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
     public Integer deleteElement(@RequestBody ConcertoDTO requestBody) {
         return concertoService.deleteElement(requestBody.artist, requestBody.place, requestBody.city, requestBody.time);
     }
 
-    @RequestMapping(method = RequestMethod.PATCH, value = "/updateitemartist", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(method = RequestMethod.PATCH, value = "/updateitemartist", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
     public Integer updateElementArtist(@RequestBody ConcertoDTO requestBody) {
         return concertoService.updateElementArtist(requestBody.artist, requestBody.place, requestBody.city,requestBody.time);
     }
 
-    @RequestMapping(method = RequestMethod.PATCH, value = "/updateitemplace", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(method = RequestMethod.PATCH, value = "/updateitemplace", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
     public Integer updateElementPlace(@RequestBody ConcertoDTO requestBody) {
         return concertoService.updateElementPlace(requestBody.artist, requestBody.place, requestBody.city,requestBody.time);
     }
 
-    @RequestMapping(method = RequestMethod.PATCH, value = "/updateitemcity", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(method = RequestMethod.PATCH, value = "/updateitemcity", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
     public Integer updateElementCity(@RequestBody ConcertoDTO requestBody) {
         return concertoService.updateElementCity(requestBody.artist, requestBody.place, requestBody.city,requestBody.time);
     }
 
-    @RequestMapping(method = RequestMethod.PATCH, value = "/updateitemtime", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(method = RequestMethod.PATCH, value = "/updateitemtime", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
     public Integer updateElementTime(@RequestBody ConcertoDTO requestBody) {
         return concertoService.updateElementTime(requestBody.artist, requestBody.place, requestBody.city,requestBody.time);
     }
