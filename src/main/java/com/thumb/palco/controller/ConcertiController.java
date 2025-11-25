@@ -66,7 +66,7 @@ public class ConcertiController {
         return concertoService.findByMonthCity(dateCitySearchDTO);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/insertitem", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(method = RequestMethod.PUT, value = "/insertitem", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
     public Integer insertElement(@RequestBody ConcertoDTO requestBody) {
         return concertoService.putConcert(requestBody.artist, requestBody.place, requestBody.city, requestBody.time);
     }

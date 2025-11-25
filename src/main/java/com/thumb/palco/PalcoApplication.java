@@ -18,13 +18,4 @@ public class PalcoApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(PalcoApplication.class, args);
 	}
-
-	public class mvcConfig implements WebMvcConfigurer {
-		@Override
-		public void addCorsMappings(CorsRegistry registry) {
-			CorsRegistry reg = registry;
-			reg.addMapping("/getconcertitime/{time}").allowedOrigins("https://palco.mywire.org");
-			WebMvcConfigurer.super.addCorsMappings(reg);
-		}
-	}
 }

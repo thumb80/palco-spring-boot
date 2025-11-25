@@ -1,46 +1,53 @@
 package com.thumb.palco.security;
 
-import org.apache.catalina.filters.SessionInitializerFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
-import java.time.Duration;
-import java.util.Arrays;
-
-import static org.springframework.security.config.Customizer.withDefaults;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig {
+public class SecurityConfig implements WebMvcConfigurer {
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("*")
+                .allowedMethods("GET", "PUT", "DELETE", "PATCH");
+    }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf(withDefaults())
-            .cors(Customizer.withDefaults())
-            .addFilterBefore(new AuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
+        http
+                .csrf(csrf -> csrf.disable())
+                .addFilterBefore(new AuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(HttpMethod.PUT, "/insertitem").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/artist").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/artists").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/cities").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/city").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/getconcertitime").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/getconcertiartistcity").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/getconcertitimeartist").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/events").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/getconcertimese").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/getconcertimesecity").permitAll()
+                        .requestMatchers(HttpMethod.DELETE, "/deleteitem").permitAll()
+                        .requestMatchers(HttpMethod.PATCH, "/updateitemartist").permitAll()
+                        .requestMatchers(HttpMethod.PATCH, "/updateitemplace").permitAll()
+                        .requestMatchers(HttpMethod.PATCH, "/updateitemcity").permitAll()
+                        .requestMatchers(HttpMethod.PATCH, "/updateitemtime").permitAll()
+                        .anyRequest().authenticated()
+                );
 
         return http.build();
     }
-
-    /*@Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("*"));
-        configuration.setAllowedHeaders(Arrays.asList("origin, content-type, accept, authorization"));
-        configuration.setAllowedMethods(Arrays.asList("GET"));
-        configuration.setAllowCredentials(true);
-        configuration.setMaxAge(Duration.ofSeconds(2L));
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }*/
 
 }
