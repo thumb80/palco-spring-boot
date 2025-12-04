@@ -41,7 +41,6 @@ public class ConcertiController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/getconcertitime/{time}", produces = {MediaType.APPLICATION_JSON_VALUE})
-    @CrossOrigin(origins = "https://palco.mywire.org")
     public List<Concerto> getConcertiTime(@PathVariable String time) {
         return concertoService.findByTime(time);
     }
